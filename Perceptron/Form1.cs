@@ -75,7 +75,6 @@ namespace Perceptron
             {
                 for (int j = 0; j < pictureBox1.Height; j++)
                 {
-
                     Color tempColor = Color.FromArgb(255, 0, 0,0);
                    
                     if (flag.GetPixel(i,j).Equals(tempColor))
@@ -101,16 +100,19 @@ namespace Perceptron
                 {
                     int dx = (int)Math.Round( (double)((Border2.X - Border1.X) / countOfRectangles) );
                     int dy = (int)Math.Round((double)((Border2.Y - Border1.Y) / countOfRectangles));
+                    int dxRest=0, dyRest=0;
 
                     bool isBlackPixelInside = false;
                     Color tempColor = Color.FromArgb(255, 0, 0, 0);
 
-                    if (i == countOfRectangles) dx += Border2.X - (Border1.X + countOfRectangles * dx);
-                    if (j == countOfRectangles) dy += Border2.Y - (Border1.Y + countOfRectangles * dy);
+                    if (j == countOfRectangles - 1)
+                        dxRest = Border2.X - (Border1.X + countOfRectangles * dx);
+                    if (i == countOfRectangles - 1) 
+                        dyRest = Border2.Y - (Border1.Y + countOfRectangles * dy);
 
-                    for (int y = Border1.Y + i * dy; y < (Border1.Y + (i + 1) * dy); y++)
+                    for (int y = Border1.Y + i * dy; y <= (Border1.Y + (i + 1) * dy + dyRest); y++)
                     {
-                        for (int x = Border1.X + j * dx; x < (Border1.X + (j + 1) * dx); x++)
+                        for (int x = Border1.X + j * dx; x <= (Border1.X + (j + 1) * dx + dxRest); x++)
                         {
                             if (flag.GetPixel(x, y).Equals(tempColor)) isBlackPixelInside = true;
                         }
@@ -119,7 +121,7 @@ namespace Perceptron
                     if (isBlackPixelInside)
                     {
                         list.Add(1);
-                        g.FillRectangle(myBrush, new Rectangle(Border1.X + j * dx, Border1.Y + i * dy, dx, dy));
+                        g.FillRectangle(myBrush, new Rectangle(Border1.X + j * dx, Border1.Y + i * dy, dx + dxRest, dy + dyRest));
                     }
                     else list.Add(0);
                 }
