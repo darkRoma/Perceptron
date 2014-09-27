@@ -177,11 +177,9 @@ namespace Perceptron
                 listsFromFile.Add(tempList);
             }
 
-            network.learningList = listsFromFile;
+            network.initNetworkWithLearningList(listsFromFile);
 
-            network.initializeOutputs();
-
-            network.forwardPass();
+            network.trainNetwork();
 
             double someVar = network.currentError;
 
