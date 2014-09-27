@@ -100,13 +100,13 @@ namespace Perceptron
             {
                 for (int i=0; i<net.layers[l].neuronsOnLayer.Length; i++)
                    {
-                    double tempsum=0;
+                    double summator=0;
 
                     for (int j = 0; j < net.layers[l - 1].neuronsOnLayer.Length; j++)
-                        tempsum += net.weights[l][i][j]*net.layers[l-1].neuronsOnLayer[j].output;
+                        summator += net.weights[l][i][j]*net.layers[l-1].neuronsOnLayer[j].output;
 
-                    net.layers[l].neuronsOnLayer[i].state = tempsum;
-                    net.layers[l].neuronsOnLayer[i].output = activationFunction(tempsum);
+                    net.layers[l].neuronsOnLayer[i].state = summator;
+                    net.layers[l].neuronsOnLayer[i].output = activationFunction(summator);
                    }
             }
 

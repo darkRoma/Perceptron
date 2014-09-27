@@ -126,8 +126,6 @@ namespace Perceptron
                     else list.Add(0);
                 }
             list.Add(-1);
-
-            
             
             myBrush.Dispose();
 
