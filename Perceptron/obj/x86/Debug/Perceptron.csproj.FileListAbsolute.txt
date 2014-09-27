@@ -1,0 +1,9 @@
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron.exe
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron.pdb
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Form1.resources
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Properties.Resources.resources
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\Perceptron.exe
+C:\Users\darkRoma\Desktop\Perceptron\Perceptron\obj\x86\Debug\Perceptron.pdb
