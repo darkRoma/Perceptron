@@ -10,18 +10,19 @@ namespace Perceptron
     class NeuralNetwork
     {
         List<List<int>> learningList;
+        List<int> questionList;
         Net net;
         int currentLearningNumber;
         int currentEpocheNumber;
         public double currentError;
 
-        static double alpha = 0.5f;
-        static double learningRate = 0.01f;
+        static double alpha = 0.2f;
+        static double learningRate = -0.25f;
         static int countOfLayersInNet = 3;
-        static int maxEpocheCount = 10;
-        static double minError = 0.1;
+        static int maxEpocheCount = 98;
+        static double minError = 0.0001f;
 
-        
+        public List<double> errors;
 
         internal class Neuron
         {
@@ -63,12 +64,10 @@ namespace Perceptron
 
             public Net(int countOfLayers)
             {
-                
-
                 layers = new Layer[countOfLayers];
 
                 layers[0] = new Layer(100);
-                layers[1] = new Layer(10);
+                layers[1] = new Layer(25);
                 layers[2] = new Layer(1);
 
                 weights = new double[countOfLayers][][];
@@ -79,13 +78,15 @@ namespace Perceptron
                          weights[i][j] = new double[layers[i-1].neuronsOnLayer.Length];
                   }
 
+
+                Random random = new Random();
                 for (int i = 1; i < countOfLayers; i++)
                     for (int j = 0; j < layers[i].neuronsOnLayer.Length; j++)
-                        for (int k = 0; k < layers[i-1].neuronsOnLayer.Length; k++)
-                            weights[i][j][k] = 0.2f;
+                        for (int k = 0; k < layers[i - 1].neuronsOnLayer.Length; k++)
+                            weights[i][j][k] = random.NextDouble() * (0.4f - 0.1f) + 0.1f;
 
                 neuronErrors = new double[countOfLayers][];
-                for (int i = 1; i < countOfLayers; i++)
+                for (int i = 0; i < countOfLayers; i++)
                     neuronErrors[i] = new double[layers[i].neuronsOnLayer.Length];
             }
 
@@ -98,18 +99,24 @@ namespace Perceptron
             currentLearningNumber = 0;
             currentEpocheNumber = 0;
             currentError = double.MaxValue;
+            errors = new List<double>();   
         }
 
         public void initNetworkWithLearningList(List<List<int>> list)
         {
             learningList = list;
-            initializeOutputs();
+            initializeOutputs(list.ElementAt(0));
         }
 
-        void initializeOutputs()
+        public void setQuestionList(List<int> qlist)
+        {
+            questionList = qlist;
+        }
+
+        void initializeOutputs(List<int> qList)
         {
             for (int i = 0; i < net.layers[0].neuronsOnLayer.Length; i++)
-                net.layers[0].neuronsOnLayer[i].output = learningList[currentLearningNumber].ElementAt(i);
+                net.layers[0].neuronsOnLayer[i].output = qList.ElementAt(i);
         }
 
         double getAnswerFromTeacherForLearningList(int number)
@@ -119,12 +126,12 @@ namespace Perceptron
 
         double activationFunction(double x)
         {
-           return Math.Tanh(alpha * x);
+           return Math.Tanh(alpha*x);
         }
 
         double activationFunctionDerivative(double x)
         {
-            return alpha*(1-Math.Pow(activationFunction(x),2));
+            return alpha*activationFunction(x)*(1-activationFunction(x));
         }
 
         public void forwardPass()
@@ -148,6 +155,7 @@ namespace Perceptron
                 currentError += Math.Pow(net.layers[countOfLayersInNet-1].neuronsOnLayer[i].output - learningList[currentLearningNumber].ElementAt(100),2);
 
             currentError /= 2;
+            errors.Add(currentError);
         }
 
         void calculateNeuronErrors()
@@ -182,7 +190,7 @@ namespace Perceptron
                 for (int i = 0; i < net.layers[l].neuronsOnLayer.Length; i++)
                 {
                     for (int j = 0; j < net.layers[l - 1].neuronsOnLayer.Length; j++)
-                        net.weights[l][i][j] = learningRate * net.neuronErrors[l][i] * net.layers[l - 1].neuronsOnLayer[j].output;                   
+                        net.weights[l][i][j] += learningRate * net.neuronErrors[l][i] * net.layers[l - 1].neuronsOnLayer[j].output;                   
                 }
             }
         }
@@ -196,7 +204,7 @@ namespace Perceptron
 
         public void trainNetwork()
         {
-            while (currentError > minError && currentEpocheNumber < maxEpocheCount)
+            while (/*currentError > minError &&*/ currentEpocheNumber < maxEpocheCount)
             {
                 forwardPass();
 
@@ -204,10 +212,18 @@ namespace Perceptron
 
                 currentLearningNumber++;
 
-                initializeOutputs();
+                initializeOutputs(learningList[currentLearningNumber]);
 
                 currentEpocheNumber++;
             }
+        }
+
+        public double askQuestion(List<int> question)
+        {   
+            initializeOutputs(question);
+            forwardPass();
+            double answer = net.layers[countOfLayersInNet - 1].neuronsOnLayer[net.layers[countOfLayersInNet-1].neuronsOnLayer.Length-1].output;
+            return answer;
         }
     }
 }

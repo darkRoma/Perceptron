@@ -27,6 +27,8 @@ namespace Perceptron
         public Point Border1;
         public Point Border2;
 
+        NeuralNetwork network;
+
         List<int> list;      
         
         public Form1()
@@ -42,6 +44,8 @@ namespace Perceptron
             
             brush = new Pen(Color.Black,6f);
             needToDraw = false;
+
+            network = new NeuralNetwork();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -98,7 +102,7 @@ namespace Perceptron
             for (int i=0; i<countOfRectangles; i++)
                 for (int j = 0; j < countOfRectangles; j++)
                 {
-                    int dx = (int)Math.Round( (double)((Border2.X - Border1.X) / countOfRectangles) );
+                    int dx = (int)Math.Round((double)((Border2.X - Border1.X) / countOfRectangles));
                     int dy = (int)Math.Round((double)((Border2.Y - Border1.Y) / countOfRectangles));
                     int dxRest=0, dyRest=0;
 
@@ -140,7 +144,6 @@ namespace Perceptron
             }
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
             list.Clear();
@@ -159,29 +162,37 @@ namespace Perceptron
 
         public void tryToMakeForwardPass()
         {
-            NeuralNetwork network = new NeuralNetwork();
-
             List<List<int>> listsFromFile = new List<List<int>>();
 
             int[] arr = System.IO.File.ReadAllText(@".\letterA.txt").Split(' ').Select(n => int.Parse(n)).ToArray();
 
             int c=0;
-            while (c != arr.Length)
+            while ((c+1)*101 != arr.Length)
             {
                 List<int> tempList = new List<int>(); ;
                 for (int i = 0; i < 101; i++)
                 {
-                    tempList.Add(arr[i]);
-                    c++;
+                    tempList.Add(arr[i+ c*101]);
                 }
                 listsFromFile.Add(tempList);
+                c++;
             }
+
+            System.Random rnd = new System.Random();
+            var numbers = Enumerable.Range(0, 99).OrderBy(r => rnd.Next()).ToArray();
+
+            List<List<int>> listsFromFile2 = new List<List<int>>();
+            for (int i = 0; i < 99; i++)
+            {
+                listsFromFile2.Add(listsFromFile[numbers[i]]);
+            }
+            listsFromFile = listsFromFile2;
 
             network.initNetworkWithLearningList(listsFromFile);
 
             network.trainNetwork();
 
-            double someVar = network.currentError;
+            double someVar = network.errors[network.errors.Count-1];
 
             MessageBox.Show(someVar.ToString());
         }
@@ -189,6 +200,14 @@ namespace Perceptron
         private void button3_Click(object sender, EventArgs e)
         {
             tryToMakeForwardPass();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            getBorders();
+            getVector();
+            double answer = network.askQuestion(list);
+            MessageBox.Show(answer.ToString());
         }
 
     }

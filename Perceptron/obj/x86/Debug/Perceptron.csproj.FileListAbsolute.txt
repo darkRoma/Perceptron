@@ -14,3 +14,4 @@ F:\Универ\Громов\Perceptron\Perceptron\bin\Debug\Perceptron.pdb
 F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Form1.resources
 F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Properties.Resources.resources
 F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.csproj.GenerateResource.Cache
+F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.csprojResolveAssemblyReference.cache
