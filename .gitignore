@@ -1,4 +1,13 @@
-Perceptron/bin/Debug/Perceptron.exe
-Perceptron/obj/x86/Debug/Perceptron.exe
-Perceptron/bin/Debug/Perceptron.pdb
-Perceptron.suo
+[Oo]bj
+[Bb]in
+*.user
+*.suo
+*.[Cc]ache
+*.bak
+*.ncb
+*.log 
+*.DS_Store
+[Tt]humbs.db 
+_ReSharper.*
+*.resharper
+Ankh.NoLoad

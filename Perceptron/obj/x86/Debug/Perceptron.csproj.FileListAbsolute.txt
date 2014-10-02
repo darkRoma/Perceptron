@@ -15,3 +15,12 @@ F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Form
 F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Properties.Resources.resources
 F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.csproj.GenerateResource.Cache
 F:\Универ\Громов\Perceptron\Perceptron\obj\x86\Debug\Perceptron.csprojResolveAssemblyReference.cache
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\Perceptron.exe
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\Perceptron.pdb
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\bin\Debug\Perceptron.exe
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\bin\Debug\Perceptron.pdb
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Form1.resources
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\Perceptron.Properties.Resources.resources
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Program Files\Нейронные сети\Perceptron\Perceptron\Perceptron\obj\x86\Debug\GenerateResource.write.1.tlog

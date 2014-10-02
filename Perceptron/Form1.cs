@@ -179,10 +179,10 @@ namespace Perceptron
             }
 
             System.Random rnd = new System.Random();
-            var numbers = Enumerable.Range(0, 99).OrderBy(r => rnd.Next()).ToArray();
+            var numbers = Enumerable.Range(0, 215).OrderBy(r => rnd.Next()).ToArray();
 
             List<List<int>> listsFromFile2 = new List<List<int>>();
-            for (int i = 0; i < 99; i++)
+            for (int i = 0; i < 215; i++)
             {
                 listsFromFile2.Add(listsFromFile[numbers[i]]);
             }
@@ -194,7 +194,7 @@ namespace Perceptron
 
             double someVar = network.errors[network.errors.Count-1];
 
-            MessageBox.Show(someVar.ToString());
+            MessageBox.Show("Ok! Trained the network!");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -207,7 +207,10 @@ namespace Perceptron
             getBorders();
             getVector();
             double answer = network.askQuestion(list);
-            MessageBox.Show(answer.ToString());
+            if (answer > 0) MessageBox.Show("Это буква \"Р\"");
+            else MessageBox.Show("Это буква \"В\"");
+            list.Clear();
+            //MessageBox.Show(answer.ToString());
         }
 
     }

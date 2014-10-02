@@ -16,10 +16,10 @@ namespace Perceptron
         int currentEpocheNumber;
         public double currentError;
 
-        static double alpha = 0.2f;
-        static double learningRate = -0.25f;
+        static double alpha = 0.5;
+        static double learningRate = 0.3f;
         static int countOfLayersInNet = 3;
-        static int maxEpocheCount = 98;
+        static int maxEpocheCount = 210;
         static double minError = 0.0001f;
 
         public List<double> errors;
@@ -67,7 +67,7 @@ namespace Perceptron
                 layers = new Layer[countOfLayers];
 
                 layers[0] = new Layer(100);
-                layers[1] = new Layer(25);
+                layers[1] = new Layer(35);
                 layers[2] = new Layer(1);
 
                 weights = new double[countOfLayers][][];
@@ -131,7 +131,8 @@ namespace Perceptron
 
         double activationFunctionDerivative(double x)
         {
-            return alpha*activationFunction(x)*(1-activationFunction(x));
+            double t = Math.Tanh(alpha * x);
+            return alpha * (1 - t * t);
         }
 
         public void forwardPass()
@@ -168,14 +169,14 @@ namespace Perceptron
                     if (l == (countOfLayersInNet - 1))
                     {
                         tempValue = (net.layers[l].neuronsOnLayer[i].output - getAnswerFromTeacherForLearningList(currentLearningNumber));
-                        tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
+                        //tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
                         net.neuronErrors[l][i] = tempValue;
                     }
                     else
                     {
                         for (int j = 0; j < net.layers[l + 1].neuronsOnLayer.Length; j++)
                             tempValue += net.neuronErrors[l + 1][j] * net.weights[l + 1][j][i];
-                        tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
+                       // tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
                         net.neuronErrors[l][i] = tempValue;
                     }
                 }
@@ -190,7 +191,7 @@ namespace Perceptron
                 for (int i = 0; i < net.layers[l].neuronsOnLayer.Length; i++)
                 {
                     for (int j = 0; j < net.layers[l - 1].neuronsOnLayer.Length; j++)
-                        net.weights[l][i][j] += learningRate * net.neuronErrors[l][i] * net.layers[l - 1].neuronsOnLayer[j].output;                   
+                        net.weights[l][i][j] -= learningRate * net.neuronErrors[l][i] * net.layers[l - 1].neuronsOnLayer[j].output;                   
                 }
             }
         }
