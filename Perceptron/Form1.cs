@@ -137,7 +137,7 @@ namespace Perceptron
 
         public void printVectorToFile()
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\trainingList.dat", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\letterA.txt", true))
             {
                 for (int i = 0; i < list.Count; i++) file.Write(list.ElementAt(i)+" ");
                 file.WriteLine();
@@ -164,7 +164,7 @@ namespace Perceptron
         {
             List<List<int>> listsFromFile = new List<List<int>>();
 
-            int[] arr = System.IO.File.ReadAllText(@".\trainingList.dat").Split(' ').Select(n => int.Parse(n)).ToArray();
+            int[] arr = System.IO.File.ReadAllText(@".\letterA.txt").Split(' ').Select(n => int.Parse(n)).ToArray();
 
             int c=0;
             while ((c+1)*101 != arr.Length)
