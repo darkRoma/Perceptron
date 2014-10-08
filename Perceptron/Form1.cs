@@ -210,7 +210,6 @@ namespace Perceptron
             if (answer > 0) MessageBox.Show("Это буква \"Р\"");
             else MessageBox.Show("Это буква \"В\"");
             list.Clear();
-            //MessageBox.Show(answer.ToString());
         }
 
     }

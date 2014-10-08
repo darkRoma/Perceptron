@@ -15,14 +15,17 @@ namespace Perceptron
         int currentLearningNumber;
         int currentEpocheNumber;
         public double currentError;
+        
 
-        static double alpha = 0.5;
-        static double learningRate = 0.3f;
+        static double alpha = 1;
+        static double learningRate = 0.5;
         static int countOfLayersInNet = 3;
-        static int maxEpocheCount = 210;
-        static double minError = 0.0001f;
+        static int maxLearningVectorCount = 210;
+        static int maxEpocheCount = 750;
+        static double minError = 0.005f;
 
         public List<double> errors;
+        public List<double> averageErrorList;
 
         internal class Neuron
         {
@@ -67,7 +70,7 @@ namespace Perceptron
                 layers = new Layer[countOfLayers];
 
                 layers[0] = new Layer(100);
-                layers[1] = new Layer(35);
+                layers[1] = new Layer(30);
                 layers[2] = new Layer(1);
 
                 weights = new double[countOfLayers][][];
@@ -100,12 +103,12 @@ namespace Perceptron
             currentEpocheNumber = 0;
             currentError = double.MaxValue;
             errors = new List<double>();   
+            averageErrorList = new List<double>();
         }
 
         public void initNetworkWithLearningList(List<List<int>> list)
         {
             learningList = list;
-            initializeOutputs(list.ElementAt(0));
         }
 
         public void setQuestionList(List<int> qlist)
@@ -169,14 +172,14 @@ namespace Perceptron
                     if (l == (countOfLayersInNet - 1))
                     {
                         tempValue = (net.layers[l].neuronsOnLayer[i].output - getAnswerFromTeacherForLearningList(currentLearningNumber));
-                        //tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
+                       // tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
                         net.neuronErrors[l][i] = tempValue;
                     }
                     else
                     {
                         for (int j = 0; j < net.layers[l + 1].neuronsOnLayer.Length; j++)
                             tempValue += net.neuronErrors[l + 1][j] * net.weights[l + 1][j][i];
-                       // tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
+                        //tempValue *= activationFunctionDerivative(net.layers[l].neuronsOnLayer[i].state);
                         net.neuronErrors[l][i] = tempValue;
                     }
                 }
@@ -205,18 +208,28 @@ namespace Perceptron
 
         public void trainNetwork()
         {
-            while (/*currentError > minError &&*/ currentEpocheNumber < maxEpocheCount)
+            averageErrorList.Add(1);
+            while (currentEpocheNumber < maxEpocheCount && averageErrorList.Last() > minError)
             {
-                forwardPass();
+                for (currentLearningNumber = 0; currentLearningNumber < maxLearningVectorCount; currentLearningNumber++)
+                {
+                    initializeOutputs(learningList[currentLearningNumber]);
 
-                backwardPass();
+                    forwardPass();
 
-                currentLearningNumber++;
+                    backwardPass();
+                }
 
-                initializeOutputs(learningList[currentLearningNumber]);
+                double averageError = 0;
+                for (int i = 0; i < errors.Count; i++)
+                    averageError += errors[i];
+                averageError /= errors.Count;
+
+                averageErrorList.Add(averageError);
 
                 currentEpocheNumber++;
             }
+            averageErrorList.Clear();
         }
 
         public double askQuestion(List<int> question)
