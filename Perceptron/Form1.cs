@@ -129,7 +129,7 @@ namespace Perceptron
                     }
                     else list.Add(0);
                 }
-            list.Add(-1);
+            list.Add(1);
             
             myBrush.Dispose();
 
@@ -162,7 +162,7 @@ namespace Perceptron
 
         public void tryToMakeForwardPass()
         {
-            const int countOfVectors = 215;
+            const int countOfVectors = 250;
 
             List<List<int>> listsFromFile = new List<List<int>>();
 
