@@ -162,6 +162,8 @@ namespace Perceptron
 
         public void tryToMakeForwardPass()
         {
+            const int countOfVectors = 215;
+
             List<List<int>> listsFromFile = new List<List<int>>();
 
             int[] arr = System.IO.File.ReadAllText(@".\letterA.txt").Split(' ').Select(n => int.Parse(n)).ToArray();
@@ -179,10 +181,10 @@ namespace Perceptron
             }
 
             System.Random rnd = new System.Random();
-            var numbers = Enumerable.Range(0, 215).OrderBy(r => rnd.Next()).ToArray();
+            var numbers = Enumerable.Range(0, countOfVectors).OrderBy(r => rnd.Next()).ToArray();
 
             List<List<int>> listsFromFile2 = new List<List<int>>();
-            for (int i = 0; i < 215; i++)
+            for (int i = 0; i < countOfVectors; i++)
             {
                 listsFromFile2.Add(listsFromFile[numbers[i]]);
             }
@@ -192,9 +194,9 @@ namespace Perceptron
 
             network.trainNetwork();
 
-            double someVar = network.errors[network.errors.Count-1];
+            double networkPower = network.networkPower;
 
-            MessageBox.Show("Ok! Trained the network!");
+            MessageBox.Show("Ok! Trained the network in "+ network.epocheCount.ToString() + " epoches!\nNetwork power is: " + string.Format("{0:F3}", networkPower) + ";");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -210,6 +212,13 @@ namespace Perceptron
             if (answer > 0) MessageBox.Show("Это буква \"Р\"");
             else MessageBox.Show("Это буква \"В\"");
             list.Clear();
+
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\errors.txt", true))
+            {
+                for (int i = 1; i < network.averageLearningErrorList.Count; i++) file.WriteLine(network.averageLearningErrorList[i] + " ");
+            }
+
         }
 
     }
