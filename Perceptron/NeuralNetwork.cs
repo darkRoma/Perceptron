@@ -183,7 +183,6 @@ namespace Perceptron
             {
                 currentError = 0;
                 for (int i = 0; i < net.layers[countOfLayersInNet - 1].neuronsOnLayer.Length; i++)
-                    //currentError += Math.Pow(net.layers[countOfLayersInNet-1].neuronsOnLayer[i].output - learningList[currentLearningNumber].ElementAt(100),2);
                     currentError += Math.Pow(net.layers[countOfLayersInNet - 1].neuronsOnLayer[i].output - answer, 2);
              
                 currentError /= 2;
